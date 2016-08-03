@@ -1,0 +1,154 @@
+Intents:
+	MyStopIsIntent	- set the stop ID
+	MyRouteIsIntent	- given a route number, crosslist that number with a list of route IDs
+						and set the route ID 
+	WheresMyBusIntent	- get the next bus; user may specify a specific route and/or stop,
+						otherwise the route and/or stop saved in the app will be used
+
+Slot Types:
+	AMAZON.NUMBER	- use for stop IDs and route numbers
+
+	LIST_OF_TRAINS	- use for DART trains and streetcars
+		RED
+		GOLD
+		GREEN
+		BLUE
+		TRE
+		M-LINE
+
+	LIST_OF_DIRECTIONS	- use for route directions
+		NORTHBOUND
+		SOUTHBOUND
+		EASTBOUND
+		WESTBOUND
+		INBOUND
+		OUTBOUND
+
+	AMAZON.HelpIntent	- get instructions on how to use app
+	AMAZON.CancelIntent or AMAZON.StopIntent 	- turn off app
+
+{
+  "intents": [
+    {
+      "intent": "MyStopIsIntent",
+      "slots": [
+        {
+          "name": "StopID",
+          "type": "AMAZON.NUMBER"
+        }
+      ]
+    },
+    {
+      "intent": "MyRouteIsIntent",
+      "slots": [
+        {
+          "name": "RouteNum",
+          "type": "AMAZON.NUMBER"
+        },
+        {
+          "name": "RouteDir",
+          "type": "LIST_OF_DIRECTIONS"
+        }
+      ]
+    },
+    {
+      "intent": "MyLineIsIntent",
+      "slots": [
+        {
+          "name": "TrainLine",
+          "type": "LIST_OF_TRAINS"
+        },
+        {
+          "name": "RouteDir",
+          "type": "LIST_OF_DIRECTIONS"
+        }
+      ]
+    },
+    {
+      "intent": "WheresMyBusIntent"
+    },
+    {
+      "intent": "WheresMyBusGivenBusRouteIntent",
+      "slots": [
+        {
+          "name": "RouteDir",
+          "type": "LIST_OF_DIRECTIONS"
+        },
+        {
+          "name": "RouteNum",
+          "type": "AMAZON.NUMBER"
+        }
+      ]
+    },
+    {
+      "intent": "WheresMyBusGivenTrainLineIntent",
+      "slots": [
+        {
+          "name": "RouteDir",
+          "type": "LIST_OF_DIRECTIONS"
+        },
+        {
+          "name": "TrainLine",
+          "type": "LIST_OF_TRAINS"
+        }
+      ]
+    },
+    {
+      "intent": "DoesMyRouteGoToStopIntent",
+      "slots": [
+        {
+          "name": "StopID",
+          "type": "AMAZON.NUMBER"
+        },
+      ]
+    },
+    {
+      "intent": "GetFareIntent"
+    },
+    {
+      "intent": "GetReducedFareIntent"
+    },
+    {
+      "intent": "AMAZON.HelpIntent"
+    },
+    {
+      "intent": "AMAZON.StopIntent"
+    }
+  ]
+}
+
+
+Sample Utterances:
+	MyStopIsIntent my stop is {StopID}
+	MyStopIsIntent my stop i.d. is {StopID}
+	MyStopIsIntent my stop number is {StopID}
+	MyRouteIsIntent my route is {RouteNum} going {RouteDir}
+	MyRouteIsIntent my bus route is {RouteNum} going {RouteDir}
+	MyLineIsIntent my line is {TrainLine} going {RouteDir}
+	MyLineIsIntent my train line is {TrainLine} going {RouteDir}
+	WheresMyBusIntent where is my bus
+	WheresMyBusIntent where is the next bus
+	WheresMyBusIntent where is my train
+	WheresMyBusIntent where is the next train
+	WheresMyBusGivenBusRouteIntent where is the next {RouteNum} bus going {RouteDir}
+	WheresMyBusGivenTrainLineIntent where is the next {TrainLine} train going {RouteDir}
+	DoesMyRouteGoToStopIntent does my route go to {StopID}
+	DoesMyRouteGoToStopIntent does my route go to stop {StopID}
+	DoesMyRouteGoToStopIntent does my route go to stop i.d. {StopID}
+	DoesMyRouteGoToStopIntent does my route go to stop number {StopID}
+	DoesMyRouteGoToStopIntent does my bus go to stop number {StopID}
+	DoesMyRouteGoToStopIntent does my train go to stop number {StopID}
+	GetFareIntent How much is the fare
+	GetFareIntent How much is a ticket
+	GetFareIntent How much does is a DART ticket
+	GetFareIntent How much does a DART ticket cost
+	GetFareIntent How much does is a DART ride
+	GetFareIntent How much does a DART ride cost
+	GetFareIntent Can you give me fare information
+	GetFareIntent Can you give me ticket information
+	GetReducedFareIntent How much is the reduced fare
+	GetReducedFareIntent How much is a reduced fare ticket
+	GetReducedFareIntent What reduced fares are available
+	GetFareIntent Can you give me reduced fare information
+	GetReducedFareIntent How much is a ticket for a senior
+	GetReducedFareIntent How much is a ticket for persons with disabilities
