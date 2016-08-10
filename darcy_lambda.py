@@ -121,7 +121,7 @@ def get_welcome_response():
     """
 
     session_attributes = {}
-
+    card_title = "Welcome"
 
     speech_output = "Hello, my name is Darcy, your DART bus and train locator. "
 
@@ -253,8 +253,8 @@ def set_route_in_session(intent, session):
     # If route and direction are valid, store in session attributes
     if RouteNumID and RouteDirID:
         # RouteNumDirID is needed when sending a URL request to m.dart.org
-        # e.g. '123450', where RouteNumID = '12345' and RouteNumDirID = '0'
-        RouteNumDirID = RouteNumID + RouteNumDirID
+        # e.g. '123450', where RouteNumID = '12345' and RouteDirID = '0'
+        RouteNumDirID = RouteNumID + RouteDirID
         session_attributes['RouteNumID'] = RouteNumID
         session_attributes['RouteNumDirID'] = RouteNumDirID
         
@@ -330,10 +330,13 @@ def get_next_arrival_helper(StopID, RouteNumID, RouteNumDirID):
         else:
             # Check if the HTTP response includes an arrival time in terms of minutes to wait.
             # Else, return whatever is actually there.
-            try:
-                speech_output = "The next arrival is in " + re.split(r'(\d+)', nextBusText.split(' minute')[0])[-2] + " minutes."
-            except IndexError:
-                speech_output = nextBusText.contents[0]
+            if ' minute' in nextBusText:
+                try:
+                    speech_output = "The next arrival is in " + re.split(r'(\d+)', nextBusText.split(' minute')[0])[-2] + " minutes."
+                except IndexError:
+                    speech_output = nextBusText
+            else:
+                speech_output = nextBusText
     return speech_output, reprompt_text
 
 def get_next_arrival_given_route(intent, session):
